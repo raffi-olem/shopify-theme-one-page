@@ -1,0 +1,92 @@
+ <!DOCTYPE html>
+<html lang="en-us">
+
+<head>    
+  <title>{{ page_title | escape }}</title>
+  
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="{{ page_description | escape }}">
+
+  <meta name=”robots” content="index, follow">
+
+  {{ content_for_header }}
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="{{ 'favicon.png' | asset_url }}" />
+
+</head>
+
+  <body>
+
+    <style>
+
+      body {
+        background: rgba(0, 0, 0, .1);
+        color: #000;
+        font-family: 'Playfair Display', serif;
+      }
+      
+    </style>
+
+    {% section 'product.liquid' %}
+
+    {{ content_for_layout }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+
+    <script>
+
+      function Gallery() {
+
+        var thumbnails = document.querySelectorAll('section.product .product-image-thumbs li a');
+
+        thumbnails.forEach(function(thumb) {
+
+          thumb.addEventListener('click', function() {
+
+            thumbnails.forEach(function(t) {
+              t.classList.remove('active');
+            });
+
+            this.classList.add('active');
+
+            var productImageW = document.querySelector('section.product .product-image').offsetWidth;
+
+            var productImageUL = document.querySelector('section.product .product-image ul');
+
+            for(var i = 0; i < thumbnails.length; i++) {
+
+              if(thumbnails[i] == this) {
+
+                gsap.to(productImageUL, { x: -(productImageW * i), duration: 1 });
+
+              }
+
+            }
+
+          });
+
+        })
+
+      }
+
+      window.onload = function() {
+
+        var gallery = new Gallery();
+
+      }
+      
+    </script>
+
+  </body>
+
+</html>

@@ -1,0 +1,1 @@
+# shopify-theme-minimum-required
